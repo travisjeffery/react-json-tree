@@ -83,6 +83,7 @@ export default class JSONNestedNode extends React.Component {
     ).isRequired,
     labelRenderer: PropTypes.func.isRequired,
     shouldExpandNode: PropTypes.func,
+    onNodeClick: PropTypes.func,
     level: PropTypes.number.isRequired,
     sortObjectKeys: PropTypes.oneOfType([PropTypes.func, PropTypes.bool]),
     isCircular: PropTypes.bool,
@@ -177,5 +178,12 @@ export default class JSONNestedNode extends React.Component {
     );
   }
 
-  handleClick = () => this.setState({ expanded: !this.state.expanded });
+  handleClick = () => {
+    const expanded = !this.state.expanded;
+    if (this.props.onNodeClick) {
+      this.props.onNodeClick(() => {
+        this.setState({ expanded });
+      });
+    }
+  }
 }
